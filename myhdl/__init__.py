@@ -149,6 +149,8 @@ from ._bin import bin
 from ._concat import concat
 from ._intbv import intbv
 from ._modbv import modbv
+from ._fixbv import fixbv
+from ._cplxbv import cplxbv
 from ._join import join
 from ._Signal import posedge, negedge, Signal, SignalType
 from ._ShadowSignal import ConcatSignal
@@ -177,6 +179,8 @@ __all__ = ["bin",
            "concat",
            "intbv",
            "modbv",
+           "fixbv",
+           "cplxbv",
            "join",
            "posedge",
            "negedge",

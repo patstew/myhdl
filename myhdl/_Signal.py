@@ -37,6 +37,7 @@ from myhdl._simulator import _futureEvents
 from myhdl._simulator import _siglist
 from myhdl._simulator import _signals
 from myhdl._intbv import intbv
+from myhdl._fixbv import fixbv
 from myhdl._bin import bin
 
 # from myhdl._enum import EnumItemType
@@ -151,6 +152,13 @@ class _Signal(object):
         elif isinstance(val, integer_types):
             self._type = integer_types
             self._setNextVal = self._setNextInt
+        elif isinstance(val, fixbv):
+            self._type = intbv
+            self._min = val._min
+            self._max = val._max
+            self._nrbits = val._nrbits
+            self._setNextVal = self._setNextFixbv
+            self._printVcd = self._printVcdVec
         elif isinstance(val, intbv):
             self._type = intbv
             self._min = val._min
@@ -304,6 +312,9 @@ class _Signal(object):
             raise TypeError("Expected int or intbv, got %s" % type(val))
         self._next._val = val
         self._next._handleBounds()
+
+    def _setNextFixbv(self, val):
+        self._next.val = val
 
     def _setNextNonmutable(self, val):
         if not isinstance(val, self._type):
